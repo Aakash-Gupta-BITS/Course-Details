@@ -1,34 +1,21 @@
-﻿using System.Collections.Generic;
-using Windows.UI.Text;
-using Windows.UI.Xaml;
+﻿using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using System;
 
 namespace Course_Record.Frames
 {
-
-    public sealed partial class Teachers_List : Page
+    public sealed partial class Teachers : Page
     {
-        int index = 0;
-
-        public Teachers_List()
+        public Teachers()
         {
             this.InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            index = (int)e.Parameter;
-            try
-            {
-                foreach (StackPanel sp in Database.Teachers.GetStackPanel(index))
-                    TeacherStack.Children.Add(sp);
-            }
-            catch
-            {
-
-            }
+            foreach (StackPanel sp in GetStackPanel((int)e.Parameter))
+                TeacherStack.Children.Add(sp);
         }
     }
 }

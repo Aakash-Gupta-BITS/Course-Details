@@ -5,27 +5,18 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Course_Record.Frames
 {
-    public sealed partial class Timing_Frame : Page
+    public sealed partial class Timings : Page
     {
-        int index = 0;
-        public Timing_Frame()
+        public Timings()
         {
             this.InitializeComponent();
-            TimingStack.Children.Add(Database.Timings.Header());
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            index = (int)e.Parameter;
-            try
-            {
-                foreach (Grid d in Database.Timings.GetGrid(index))
-                    TimingStack.Children.Add(d);
-            }
-            catch
-            {
-
-            }
+            TimingStack.Children.Add(Timing.Header());
+            foreach (Grid d in GetGrid((int)e.Parameter))
+                TimingStack.Children.Add(d);
         }
     }
 }

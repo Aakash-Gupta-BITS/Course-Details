@@ -9,6 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="Green">
+        <TextBox x:Name="LocalFilesLocation" HorizontalAlignment="Stretch" VerticalAlignment="Top" TextChanged="LocalFilesLocation_TextChanged"/>
         <StackPanel BorderThickness="2" BorderBrush="White" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Padding="10" Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock HorizontalAlignment="Center" Padding="20" Foreground="White" FontFamily="Segoe MDL2 Assets" Text="&#xE8D7;" FontSize="30"/>

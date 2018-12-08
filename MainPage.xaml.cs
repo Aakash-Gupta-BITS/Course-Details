@@ -1,5 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
-
+using Course_Record.Frames;
 
 namespace Course_Record
 {
@@ -39,11 +39,11 @@ namespace Course_Record
 
         private void UpdatePivots()
         {
-                Books.Navigate(typeof(Frames.Books), lastSelectedIndex - 1);
-                Handouts.Navigate(typeof(Frames.Handout), lastSelectedIndex - 1);
-                TeacherList.Navigate(typeof(Frames.Teachers_List), lastSelectedIndex - 1);
-                TestList.Navigate(typeof(Frames.Test_Frame), lastSelectedIndex - 1);
-                Timings.Navigate(typeof(Frames.Timing_Frame), lastSelectedIndex - 1);
+            Books.Navigate(typeof(Books), lastSelectedIndex - 1);
+            Handouts.Navigate(typeof(Handout), lastSelectedIndex - 1);
+            TeacherList.Navigate(typeof(Teachers), lastSelectedIndex - 1);
+            TestList.Navigate(typeof(Tests), lastSelectedIndex - 1);
+            Timings.Navigate(typeof(Timings), lastSelectedIndex - 1);
         }
     }
 }

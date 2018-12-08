@@ -9,26 +9,16 @@ namespace Course_Record.Frames
 {
     public sealed partial class Handout : Page
     {
-        int index = 0;
-
         public Handout()
         {
             this.InitializeComponent();
-            HandoutTopicNamesStack.Children.Add(Database.Handouts.Header());
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            index = (int)e.Parameter;
-            try
-            {
-                foreach (Grid d in Database.Handouts.GetGrid(index))
-                    HandoutTopicNamesStack.Children.Add(d);
-            }
-            catch
-            {
-
-            }
+            HandoutTopicNamesStack.Children.Add(HandoutItem.Header());
+            foreach (Grid d in GetGrid((int)e.Parameter))
+                HandoutTopicNamesStack.Children.Add(d);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using System.Threading.Tasks;
+using Database;
 using Windows.Storage;
 
 namespace Course_Record
@@ -9,12 +11,25 @@ namespace Course_Record
         public LoginPage()
         {
             this.InitializeComponent();
+
+            LocalFilesLocation.Text = ApplicationData.Current.LocalFolder.Path;
+
+            new Task(Frames.Books.GetFromDisk).Start();
+            new Task(Frames.Teachers.GetFromDisk).Start();
+            new Task(Frames.Handout.GetFromDisk).Start();
+            new Task(Frames.Tests.GetFromDisk).Start();
+            new Task(Frames.Timings.GetFromDisk).Start();
         }
 
         private void LoginClick(object sender, RoutedEventArgs e)
         {
-            if (Username.Text.ToLower() == "hello" && Password.Password.ToLower() == "world")
+            if (Security.LoginCheck(Username.Text, Password.Password))
                 this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void LocalFilesLocation_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            LocalFilesLocation.Text = ApplicationData.Current.LocalFolder.Path;
         }
     }
 }

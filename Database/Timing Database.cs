@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.Storage;
 
-namespace Database
+namespace Course_Record.Frames
 {
-    class Timings
+    public sealed partial class Timings : Page
     {
         enum Day
         {
@@ -21,137 +23,178 @@ namespace Database
 
         class Timing
         {
-            public Day DayOfWeek;
-            public DateTime Time = new DateTime();
-            public string Type;
+            public const int NoOfPaarametres = 3;
+
+            public Day DayOfWeek { get; set; }
+            //Hour:Minute
+            public DateTime Time { get; set; }
+            public string Type { get; set; }
+
+            public Timing() { }
+
+            public Timing(string x, int FromIndex)
+            {
+                string[] input = x.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                DayOfWeek = (Day)int.Parse(input[FromIndex++]);
+                Time = new DateTime(
+                    1,
+                    1,
+                    1,
+                    int.Parse(input[FromIndex].Split(' ')[0]),
+                    int.Parse(input[FromIndex].Split(' ')[1]),
+                    0);
+                Type = input[++FromIndex];
+            }
+
+            public static Grid Header()
+            {
+                Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+
+                TextBlock name = new TextBlock()
+                {
+                    Text = "Day",
+                    FontSize = 20,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    FontWeight = FontWeights.Bold
+                };
+                TextBlock author = new TextBlock()
+                {
+                    Text = "Time",
+                    FontSize = 20,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    FontWeight = FontWeights.Bold
+                };
+                TextBlock HavePdf = new TextBlock()
+                {
+                    Text = "Type",
+                    FontSize = 20,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    FontWeight = FontWeights.Bold
+                };
+
+                Grid.SetColumn(name, 0);
+                Grid.SetColumn(author, 1);
+                Grid.SetColumn(HavePdf, 2);
+
+                grid.Children.Add(name);
+                grid.Children.Add(author);
+                grid.Children.Add(HavePdf);
+
+                return grid;
+            }
+
+            public Grid GridItem()
+            {
+                string TimeItemString(int x) => (x.ToString().Length == 1 ? "0" + x : x.ToString());
+
+                Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+
+                TextBlock Day = new TextBlock()
+                {
+                    Text = DayOfWeek.ToString("g"),
+                    HorizontalAlignment = HorizontalAlignment.Left
+                };
+                TextBlock Time = new TextBlock()
+                {
+                    Text = TimeItemString(this.Time.Hour) + ":" + TimeItemString(this.Time.Minute),
+                    HorizontalAlignment = HorizontalAlignment.Left
+                };
+                TextBlock Type = new TextBlock()
+                {
+                    Text = this.Type,
+                    HorizontalAlignment = HorizontalAlignment.Left
+                };
+
+                Grid.SetColumn(Day, 0);
+                Grid.SetColumn(Time, 1);
+                Grid.SetColumn(Type, 2);
+
+                grid.Children.Add(Day);
+                grid.Children.Add(Time);
+                grid.Children.Add(Type);
+
+                return grid;
+            }
+
+            public override string ToString() => string.Format(
+                "{0}\t{1} {2}\t{3}",
+                (int)DayOfWeek,
+                Time.Hour,
+                Time.Minute,
+                Type);
+
         }
 
         static readonly List<Timing>[] TimingList = new List<Timing>[7];
 
-        static Timings()
+        static List<Grid> GetGrid(int index)
         {
-            TimingList[2] = new List<Timing>
-            {
-                new Timing
-                {
-                    DayOfWeek = Day.Monday,
-                    Time = new DateTime(1, 1, 1, 15, 0, 0),
-                    Type = "Lecture"
-                },
-                new Timing
-                {
-                    DayOfWeek = Day.Tuesday,
-                    Time = new DateTime(1, 1, 1, 8, 0, 0),
-                    Type = "Lab"
-                },
-                new Timing
-                {
-                    DayOfWeek = Day.Tuesday,
-                    Time = new DateTime(1, 1, 1, 17, 0, 0),
-                    Type = "Lecture"
-                },
-                new Timing
-                {
-                    DayOfWeek = Day.Wednesday,
-                    Time = new DateTime(1, 1, 1, 15, 0, 0),
-                    Type = "Lecture"
-                },
-                new Timing
-                {
-                    DayOfWeek = Day.Friday,
-                    Time = new DateTime(1, 1, 1, 15, 0, 0),
-                    Type = "Lecture"
-                }
-            };
-        }
+            if (TimingList[index] == null)
+                return new List<Grid>();
 
-        private static Grid GetGrid(Timing t)
-        {
-            Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            List<Grid> grids = new List<Grid>();
 
-            TextBlock Day = new TextBlock()
-            {
-                Text = t.DayOfWeek.ToString("g"),
-                HorizontalAlignment = HorizontalAlignment.Left
-            };
-            TextBlock Time = new TextBlock()
-            {
-                Text = (t.Time.Hour.ToString().Length == 1 ? "0" + t.Time.Hour : t.Time.Hour.ToString()) + ":" + (t.Time.Minute.ToString().Length == 1 ? "0" + t.Time.Minute : t.Time.Minute.ToString()),
-                HorizontalAlignment = HorizontalAlignment.Left
-            };
-            TextBlock Type = new TextBlock()
-            {
-                Text = t.Type,
-                HorizontalAlignment = HorizontalAlignment.Left
-            };
-
-            Grid.SetColumn(Day, 0);
-            Grid.SetColumn(Time, 1);
-            Grid.SetColumn(Type, 2);
-
-            grid.Children.Add(Day);
-            grid.Children.Add(Time);
-            grid.Children.Add(Type);
-
-            return grid;
-
-        }
-
-        public static Grid[] GetGrid(int index)
-        {
-            if (index < 0 || index > 6 || TimingList[index] == null)
-                throw new IndexOutOfRangeException();
-
-            Grid[] grid = new Grid[TimingList[index].Count];
-
-            int i = 0;
             foreach (Timing t in TimingList[index])
-                grid[i++] = GetGrid(t);
+                grids.Add(t.GridItem());
 
-            return grid;
+            return grids;
         }
 
-        public static Grid Header()
+        static async void WriteOnDisk()
         {
-            Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-
-            TextBlock name = new TextBlock()
+            string ListToString()
             {
-                Text = "Day",
-                FontSize = 20,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                FontWeight = FontWeights.Bold
-            };
-            TextBlock author = new TextBlock()
+                string output = "";
+
+                for (int i = 0; i < TimingList.Length; ++i)
+                    if (TimingList[i] != null)
+                    {
+                        output += TimingList[i].Count;
+                        foreach (Timing t in TimingList[i])
+                            output += t.ToString() + "\t";
+                        output += "\n";
+                    }
+                    else
+                        output += "0\n";
+
+                return output;
+            }
+            await FileIO.WriteTextAsync(await ApplicationData.Current.LocalFolder.CreateFileAsync(@"Database\Timings", CreationCollisionOption.OpenIfExists), ListToString());
+        }
+
+        public static void GetFromDisk()
+        {
+            List<Timing> Desearlize(string RawString)
             {
-                Text = "Time",
-                FontSize = 20,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                FontWeight = FontWeights.Bold
-            };
-            TextBlock HavePdf = new TextBlock()
+                string[] inputs = RawString.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (inputs.Length != 1 + (int.Parse(inputs[0]) * Timing.NoOfPaarametres))
+                    throw new Exception();
+
+                List<Timing> _output = new List<Timing>();
+
+                for (int CurrentIndex = 1; CurrentIndex < inputs.Length; CurrentIndex += Timing.NoOfPaarametres)
+                    _output.Add(new Timing(RawString, CurrentIndex));
+
+                return _output;
+            }
+            string output = Task.Run(async () =>
             {
-                Text = "Type",
-                FontSize = 20,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                FontWeight = FontWeights.Bold
-            };
+                return await FileIO.ReadTextAsync(
+                    await ApplicationData.Current.LocalFolder.GetFileAsync(
+                        @"Database\Timings"));
+            }).Result;
 
-            Grid.SetColumn(name, 0);
-            Grid.SetColumn(author, 1);
-            Grid.SetColumn(HavePdf, 2);
+            string[] lists = output.Split('\n');
 
-            grid.Children.Add(name);
-            grid.Children.Add(author);
-            grid.Children.Add(HavePdf);
-
-            return grid;
+            for (int i = 0; i < 7; ++i)
+                TimingList[i] = Desearlize(lists[i]);
         }
     }
 }

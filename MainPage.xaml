@@ -80,7 +80,7 @@
                     <PivotItem Header="Handout">
                         <Frame x:Name="Handouts"/>
                     </PivotItem>
-
+                    
                     <PivotItem Header="Teacher List">
                         <Frame x:Name="TeacherList"/>
                     </PivotItem>
