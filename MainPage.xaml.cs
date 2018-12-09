@@ -24,6 +24,17 @@ namespace Course_Record
                     HamburgerMenuPane.SelectedIndex = lastSelectedIndex;
                     break;
 
+                case 8:
+                    if (ChangedByProgram)
+                    {
+                        ChangedByProgram = false;
+                        return;
+                    }
+                    lastSelectedIndex = HamburgerMenuPane.SelectedIndex;
+                    HamburgerMenu.IsPaneOpen = false;
+                    this.Frame.Navigate(typeof(LoginPage));
+                    break;
+
                 default:
                     if (ChangedByProgram)
                     {
@@ -44,6 +55,7 @@ namespace Course_Record
             TeacherList.Navigate(typeof(Teachers), lastSelectedIndex - 1);
             TestList.Navigate(typeof(Tests), lastSelectedIndex - 1);
             Timings.Navigate(typeof(Timings), lastSelectedIndex - 1);
+
         }
     }
 }

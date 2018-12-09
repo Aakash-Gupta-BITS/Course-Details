@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <SplitView x:Name="HamburgerMenu" IsPaneOpen="False" DisplayMode="CompactOverlay" OpenPaneLength="250" CompactPaneLength="50" HorizontalAlignment="Stretch">
@@ -66,35 +66,42 @@
                             <TextBlock VerticalAlignment="Center" Text="Workshop" FontSize="20"/>
                         </StackPanel>
                     </ListBoxItem>
+
+                    <ListBoxItem Padding="0" Height="50">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" FontFamily="Segoe MDL2 Assets" FontSize="30" Width="50" Text="&#xE8D7;"/>
+                            <TextBlock VerticalAlignment="Center" Text="Make Changes" FontSize="20"/>
+                        </StackPanel>
+                    </ListBoxItem>
                 </ListBox>
             </SplitView.Pane>
 
             <SplitView.Content>
-                <Pivot>
-                    <PivotItem Header="Books">
-                        <Frame x:Name="Books"/>
-                    </PivotItem>
+                    <Pivot>
+                        <PivotItem Header="Books">
+                            <Frame x:Name="Books"/>
+                        </PivotItem>
 
-                    <PivotItem Header="Documents"/>
+                        <PivotItem Header="Documents"/>
 
-                    <PivotItem Header="Handout">
-                        <Frame x:Name="Handouts"/>
-                    </PivotItem>
-                    
-                    <PivotItem Header="Teacher List">
-                        <Frame x:Name="TeacherList"/>
-                    </PivotItem>
+                        <PivotItem Header="Handout">
+                            <Frame x:Name="Handouts"/>
+                        </PivotItem>
 
-                    <PivotItem Header="Test Record">
-                        <Frame x:Name="TestList"/>
-                    </PivotItem>
+                        <PivotItem Header="Teacher List">
+                            <Frame x:Name="TeacherList"/>
+                        </PivotItem>
 
-                    <PivotItem Header="Timing">
-                        <Frame x:Name="Timings"/>
-                    </PivotItem>
+                        <PivotItem Header="Test Record">
+                            <Frame x:Name="TestList"/>
+                        </PivotItem>
 
-                    <PivotItem Header="Upcoming Events"/>
-                </Pivot>
+                        <PivotItem Header="Timing">
+                            <Frame x:Name="Timings"/>
+                        </PivotItem>
+
+                        <PivotItem Header="Upcoming Events"/>
+                    </Pivot>
             </SplitView.Content>
         </SplitView>
     </Grid>

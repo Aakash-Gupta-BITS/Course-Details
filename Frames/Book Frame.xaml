@@ -8,14 +8,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="BookNamesStack" Padding="20" Grid.Column="0"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+            <StackPanel x:Name="BookNamesStack" Grid.Column="0"/>
         </ScrollViewer>
     </Grid>
 </Page>

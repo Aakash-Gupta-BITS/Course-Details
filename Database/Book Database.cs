@@ -106,6 +106,43 @@ namespace Course_Record.Frames
                 return grid;
             }
 
+            public Grid AddItemTemplate()
+            {
+                Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+
+                TextBox name = new TextBox()
+                {
+                    Text = Name,
+                    HorizontalAlignment = HorizontalAlignment.Left
+                };
+                TextBox author = new TextBox()
+                {
+                    Text = Author,
+                    HorizontalAlignment = HorizontalAlignment.Left
+                };
+                CheckBox cbox = new CheckBox()
+                {
+                    IsChecked = HavePDF,
+                    IsEnabled = false,
+                    Content = "",
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+
+
+                Grid.SetColumn(name, 0);
+                Grid.SetColumn(author, 1);
+                Grid.SetColumn(cbox, 2);
+
+                grid.Children.Add(name);
+                grid.Children.Add(author);
+                grid.Children.Add(cbox);
+
+                return grid;
+            }
+
             public override string ToString() => 
                 string.Format(
                     "{0}\t{1}\t{2}", 
@@ -113,7 +150,7 @@ namespace Course_Record.Frames
                     HavePDF,
                     Name);
         }
-
+        
         static readonly List<Book>[] BookList = new List<Book>[7];
 
         static List<Grid> GetGrid(int index)
@@ -150,6 +187,16 @@ namespace Course_Record.Frames
             }
 
             await FileIO.WriteTextAsync(await ApplicationData.Current.LocalFolder.CreateFileAsync(@"Database\Books", CreationCollisionOption.OpenIfExists), ListToString());
+        }
+
+        public static void Remove(int index_course, int index_book)
+        {
+            if (index_course < 0 || index_course > 6)
+                throw new Exception("Course at index " + index_course + " not found.\n");
+            if (BookList[index_course].Count < index_book || index_book < 0)
+                throw new Exception("Given index is not found at specified course. Index range is from 0 to " + (BookList[index_course].Count - 1) + "\n");
+
+            BookList[index_course].Remove(BookList[index_course][index_book]);
         }
 
         public static void GetFromDisk()

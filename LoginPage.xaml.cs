@@ -24,7 +24,7 @@ namespace Course_Record
         private void LoginClick(object sender, RoutedEventArgs e)
         {
             if (Security.LoginCheck(Username.Text, Password.Password))
-                this.Frame.Navigate(typeof(MainPage));
+                this.Frame.Navigate(typeof(Changes.ChangeBookItems));
         }
 
         private void LocalFilesLocation_TextChanged(object sender, TextChangedEventArgs e)
