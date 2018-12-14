@@ -15,10 +15,3 @@ Features Added Till Today :
       b)  Upcoming Events
       c)  Reason
           i)  No Idea of Layout
- 
-4.    Bug
-            Line 226
-            Book Database.cs
-            Replace Split('\n', ...); with Split(new char[] { '\n', '\r'}, ...);
- 
-5.  Sample File Input only, no Modification. Modification part will be completed within 4-5 days.
