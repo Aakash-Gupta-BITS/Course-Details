@@ -9,8 +9,90 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
-            <StackPanel x:Name="BookNamesStack" Grid.Column="0"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <CommandBar Background="White" Foreground="Black" Grid.Row="0">
+            <AppBarButton Content="View" Icon="View" ClickMode="Release" Click="CommandClicked"/>
+            <AppBarButton Content="Add" Icon="Add" ClickMode="Release" Click="CommandClicked"/>
+            <AppBarButton Content="Modify" Icon="Repair" ClickMode="Release" Click="CommandClicked"/>
+            <AppBarButton Content="Delete" Icon="Delete" ClickMode="Release" Click="CommandClicked"/>
+        </CommandBar>
+
+        <ScrollViewer x:Name="ViewFrame" VerticalScrollBarVisibility="Auto" Grid.Row="1" Visibility="Visible">
+            <StackPanel x:Name="BookNamesStack" Margin="0,10,0,0"/>
+        </ScrollViewer>
+
+        <ScrollViewer x:Name="AddFrame" Grid.Row="1" Visibility="Collapsed">
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Margin="5,5,5,5" Text="Name : "/>
+                <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Margin="5,5,5,5" Text="Author : "/>
+
+                <TextBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5,5,5,5" x:Name="Add_Name" BorderBrush="Black"/>
+                <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5,5,5,5" x:Name="Add_Author" BorderBrush="Black"/>
+                <CheckBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="5,5,5,5" x:Name="Add_HavePDF" Content="Have PDF"/>
+
+                <Button x:Name="Add_Add" Content="Add" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="Add_Click"/>
+
+            </Grid>
+        </ScrollViewer>
+
+        <ScrollViewer x:Name="ModifyFrame" Grid.Row="1" Visibility="Collapsed">
+            <Grid Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Margin="5,5,5,5" Text="Select : "/>
+                <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Margin="5,5,5,5" Text="Name : "/>
+                <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Margin="5,5,5,5" Text="Author : "/>
+
+                <ComboBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5,5,5,5" x:Name="Modify_ItemsList" BorderBrush="Black" SelectionChanged="Modify_ItemsList_SelectionChanged"/>
+                <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5,5,5,5" x:Name="Modify_Name" BorderBrush="Black"/>
+                <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5,5,5,5" x:Name="Modify_Author" BorderBrush="Black"/>
+                <CheckBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Margin="5,5,5,5" x:Name="Modify_HavePDF" Content="Have PDF"/>
+
+                <Button x:Name="Modify_Modify" Content="Modify" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="Modify_Click"/>
+            </Grid>
+        </ScrollViewer>
+
+        <ScrollViewer x:Name="DeleteFrame" Grid.Row="1" Visibility="Collapsed">
+            <Grid Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Margin="5,5,5,5" Text="Select : "/>
+                <ComboBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5,5,5,5" x:Name="Delete_ItemsList" BorderBrush="Black"/>
+                <Button x:Name="Delete_Delete" Content="Delete" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,5,5,5" Click="Delete_Click"/>
+
+
+            </Grid>
         </ScrollViewer>
     </Grid>
 </Page>

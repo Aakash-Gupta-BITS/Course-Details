@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,7 +26,7 @@ namespace Course_Record.Frames
             {
                 string[] input = x.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 Author = input[FromIndex++];
-                HavePDF = (input[FromIndex++] == "true");
+                HavePDF = (input[FromIndex++] == "True");
                 Name = input[FromIndex];
             }
 
@@ -106,51 +108,14 @@ namespace Course_Record.Frames
                 return grid;
             }
 
-            public Grid AddItemTemplate()
-            {
-                Grid grid = new Grid() { Margin = new Thickness(10, 10, 10, 10) };
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-
-                TextBox name = new TextBox()
-                {
-                    Text = Name,
-                    HorizontalAlignment = HorizontalAlignment.Left
-                };
-                TextBox author = new TextBox()
-                {
-                    Text = Author,
-                    HorizontalAlignment = HorizontalAlignment.Left
-                };
-                CheckBox cbox = new CheckBox()
-                {
-                    IsChecked = HavePDF,
-                    IsEnabled = false,
-                    Content = "",
-                    HorizontalAlignment = HorizontalAlignment.Center
-                };
-
-
-                Grid.SetColumn(name, 0);
-                Grid.SetColumn(author, 1);
-                Grid.SetColumn(cbox, 2);
-
-                grid.Children.Add(name);
-                grid.Children.Add(author);
-                grid.Children.Add(cbox);
-
-                return grid;
-            }
-
-            public override string ToString() => 
+            public override string ToString() =>
                 string.Format(
-                    "{0}\t{1}\t{2}", 
+                    "{0}\t{1}\t{2}",
                     Author,
                     HavePDF,
                     Name);
         }
-        
+
         static readonly List<Book>[] BookList = new List<Book>[7];
 
         static List<Grid> GetGrid(int index)
@@ -188,7 +153,7 @@ namespace Course_Record.Frames
 
             await FileIO.WriteTextAsync(await ApplicationData.Current.LocalFolder.CreateFileAsync(@"Database\Books", CreationCollisionOption.OpenIfExists), ListToString());
         }
-
+        
         public static void Remove(int index_course, int index_book)
         {
             if (index_course < 0 || index_course > 6)
@@ -223,7 +188,7 @@ namespace Course_Record.Frames
                         @"Database\Books"));
             }).Result;
 
-            string[] lists = output.Split('\n');
+            string[] lists = output.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
             for (int i = 0; i < 7; ++i)
                 BookList[i] = Deserialize(lists[i]);

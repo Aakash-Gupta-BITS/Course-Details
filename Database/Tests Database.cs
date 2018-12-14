@@ -221,7 +221,7 @@ namespace Course_Record.Frames
                         @"Database\Tests"));
             }).Result;
 
-            string[] lists = output.Split('\n');
+            string[] lists = output.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
             for (int i = 0; i < 7; ++i)
                 TestList[i] = Desearlize(lists[i]);

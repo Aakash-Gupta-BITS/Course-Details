@@ -25,7 +25,7 @@
                 <PasswordBox x:Name="Password" Width="500" PlaceholderText="Password" Background="White" Foreground="Black"/>
             </StackPanel>
 
-            <Button Content="Login" Foreground="Green" Background="White" HorizontalAlignment="Center" Click="LoginClick"/>
+            <Button Content="Login" Foreground="Green" Background="White" HorizontalAlignment="Center" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </Page>

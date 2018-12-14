@@ -13,23 +13,17 @@ namespace Course_Record
             this.InitializeComponent();
 
             LocalFilesLocation.Text = ApplicationData.Current.LocalFolder.Path;
-
-            new Task(Frames.Books.GetFromDisk).Start();
-            new Task(Frames.Teachers.GetFromDisk).Start();
-            new Task(Frames.Handout.GetFromDisk).Start();
-            new Task(Frames.Tests.GetFromDisk).Start();
-            new Task(Frames.Timings.GetFromDisk).Start();
-        }
-
-        private void LoginClick(object sender, RoutedEventArgs e)
-        {
-            if (Security.LoginCheck(Username.Text, Password.Password))
-                this.Frame.Navigate(typeof(Changes.ChangeBookItems));
         }
 
         private void LocalFilesLocation_TextChanged(object sender, TextChangedEventArgs e)
         {
             LocalFilesLocation.Text = ApplicationData.Current.LocalFolder.Path;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Security.LoginCheck(Username.Text, Password.Password))
+                this.Frame.Navigate(typeof(MainPage));
         }
     }
 }
