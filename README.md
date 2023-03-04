@@ -1,3 +1,7 @@
+# About the Project
+The new version of code is available at: https://github.com/Aakash-Gupta-BITS/Course-Record-v2.0
+
+
 Minimum Requirement keep in mind while developing app :     Windows 10 1803
 
 Features Added Till Today :
