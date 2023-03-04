@@ -1,4 +1,3 @@
-# About the Project
 The new version of code is available at: https://github.com/Aakash-Gupta-BITS/Course-Record-v2.0
 
 
